@@ -9,6 +9,19 @@ pipeline {
 
     
     stages {
+        /* checkout repo */
+        stage('Checkout SCM') {
+            steps {
+                checkout([
+                 $class: 'GitSCM',
+                 branches: [[name: 'master']],
+                 userRemoteConfigs: [[
+                    url: 'git@github.com:anitacruz/todo-app.git',
+                    credentialsId: '',
+                 ]]
+                ])
+            }
+        }
         stage('Fetch') {
             steps{ 
                 echo "Fetching 💡"
