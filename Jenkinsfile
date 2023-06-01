@@ -1,3 +1,5 @@
+properties([pipelineTriggers([githubPush()])])
+
 pipeline {
     agent {
         node {
@@ -5,9 +7,6 @@ pipeline {
         }
     }
 
-    pipelineTriggers {
-        githubPush() // Trigger the pipeline on GitHub push events
-    }
     
     stages {
         stage('Fetch') {
