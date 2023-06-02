@@ -19,12 +19,18 @@ pipeline {
         
        stage('Approval') {
             steps {
+                // Deploy your application
+
+                // Prompt for approval
+                input(id: 'deployment-approval', message: 'Approve deployment?', parameters: [
+                [$class: 'ChoiceParameterDefinition', choices: 'user1,user2,user3', name: 'Approver']
+                ])
+
+                // Only continue if approved by specific users
                 script {
-                    if (isUserAdmin()) {
-                        input(message: 'Proceed with the deployment?', submitter: 'admin')
-                    } else {
-                        error('You are not authorized to approve the pipeline.')
-                    }
+                    def approvers = input('deployment-approval')
+                    if (!approvers.contains('user1') && !approvers.contains('user2') && !approvers.contains('user3')) {
+                    error("Deployment not approved by authorized users")
                 }
             }
         }
@@ -49,10 +55,4 @@ pipeline {
             }
         }
     }
-}
-
-@NonCPS
-def isUserAdmin() {
-    def userId = Jenkins.getInstance().getAuthentication().getName()
-    return userId == 'admin' || userId == 'acruz'
 }
