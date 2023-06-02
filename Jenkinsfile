@@ -23,7 +23,7 @@ pipeline {
 
                 // Prompt for approval
                 input(id: 'deployment-approval', message: 'Approve deployment?', parameters: [
-                [$class: 'ChoiceParameterDefinition', choices: 'admin,acruz', name: 'Approver']
+                [$class: 'ChoiceParameterDefinition', choices: 'acruz', name: 'Approver']
                 ])
 
                 // Only continue if approved by specific users
