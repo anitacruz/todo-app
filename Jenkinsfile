@@ -8,32 +8,31 @@ pipeline {
     
     stages {
         
-        stage('Fetch') {
+       
+        
+       stage('Approval') {
+            steps {
+                // Deploy your application
+
+                input('anetas deployment approval', submitter:'acruz')
+
+                // Only continue if approved by specific users
+//                 script {
+//                     input('deployment-approval', submitter='acruz')
+//                     if (!approvers == 'admin'  && !approvers=='acruz') {
+//                         error("Deployment not approved by authorized users")
+//                     }
+//                 }
+            }
+        }
+        
+         stage('Fetch') {
             steps{ 
                 echo "Fetching 💡"
                 sh'''
                     git clone https://github.com/anitacruz/todo-app
                 '''
             } 
-        }
-        
-       stage('Approval') {
-            steps {
-                // Deploy your application
-
-                // Prompt for approval
-                input(id: 'deployment-approval', message: 'Approve deployment?', parameters: [
-                [$class: 'ChoiceParameterDefinition', choices: 'acruz', name: 'approvers']
-                ])
-
-                // Only continue if approved by specific users
-                script {
-                    def approvers = input('deployment-approval')
-                    if (!approvers == 'admin'  && !approvers=='acruz') {
-                        error("Deployment not approved by authorized users")
-                    }
-                }
-            }
         }
         stage('Test') {
             steps { 
