@@ -23,13 +23,13 @@ pipeline {
 
                 // Prompt for approval
                 input(id: 'deployment-approval', message: 'Approve deployment?', parameters: [
-                [$class: 'ChoiceParameterDefinition', choices: 'user1,user2,user3', name: 'Approver']
+                [$class: 'ChoiceParameterDefinition', choices: 'admin,acruz', name: 'Approver']
                 ])
 
                 // Only continue if approved by specific users
                 script {
                     def approvers = input('deployment-approval')
-                    if (!approvers.contains('user1') && !approvers.contains('user2') && !approvers.contains('user3')) {
+                    if (!approvers.contains('admin') && !approvers.contains('acruz')) {
                     error("Deployment not approved by authorized users")
                 }
             }
