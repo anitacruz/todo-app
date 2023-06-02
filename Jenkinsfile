@@ -51,7 +51,8 @@ pipeline {
     }
 }
 
+@NonCPS
 def isUserAdmin() {
-    def userId = Jenkins.instance.getAuthentication().getName()
+    def userId = Jenkins.getInstance().getAuthentication().getName()
     return userId == 'admin' || userId == 'acruz'
 }
