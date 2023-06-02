@@ -30,7 +30,8 @@ pipeline {
                 script {
                     def approvers = input('deployment-approval')
                     if (!approvers.contains('admin') && !approvers.contains('acruz')) {
-                    error("Deployment not approved by authorized users")
+                        error("Deployment not approved by authorized users")
+                    }
                 }
             }
         }
