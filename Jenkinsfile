@@ -14,7 +14,7 @@ pipeline {
             steps {
                 // Deploy your application
 
-                input(message:'anetas deployment approval', submitter:'acruz')
+                input(message:'anetas deployment approval')
 
                 // Only continue if approved by specific users
 //                 script {
