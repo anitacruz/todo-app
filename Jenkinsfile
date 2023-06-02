@@ -17,10 +17,15 @@ pipeline {
             } 
         }
         
-        stage('Approval') {
-            agent none
+       stage('Approval') {
             steps {
-                input message: 'Do you want to approve if flow can proceeded to next stage?', submitter: 'acruz,admin', ok: 'Yes'
+                script {
+                    if (isUserAdmin()) {
+                        input(message: 'Proceed with the deployment?', submitter: 'admin')
+                    } else {
+                        error('You are not authorized to approve the pipeline.')
+                    }
+                }
             }
         }
         stage('Test') {
@@ -44,4 +49,9 @@ pipeline {
             }
         }
     }
+}
+
+def isUserAdmin() {
+    def userId = Jenkins.instance.getAuthentication().getName()
+    return userId == 'admin' || userId == 'acruz'
 }
