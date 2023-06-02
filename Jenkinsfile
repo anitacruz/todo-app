@@ -12,9 +12,16 @@ pipeline {
             steps{ 
                 echo "Fetching 💡"
                 sh'''
-                    git clone https://github.com/szavalia/todo-app
+                    git clone https://github.com/anitacruz/todo-app
                 '''
             } 
+        }
+        
+        stage('Approval') {
+            agent none
+            steps {
+                input message: 'Do you want to approve if flow can proceeded to next stage?', submitter: 'acruz,admin', ok: 'Yes'
+            }
         }
         stage('Test') {
             steps { 
