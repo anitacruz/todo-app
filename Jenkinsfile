@@ -5,31 +5,13 @@ pipeline {
         }
     }
     
-    triggers {
-        githubPush()
-    }
-    
-     parameters {
-        choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'], description: 'Selecciona el ambiente objetivo')
-    }
-
-    
     stages {
         
        stage('Solicitar Ambiente') {
             steps {
                 script {
-                    if(params.CHANGE_ID){
-                        echo "vengo de github"
-                        input message: 'Seleccione el ambiente de despliegue', parameters: [choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'])]
-
-                    }
-                    if (params.ENVIRONMENT == 'desarrollo' || params.ENVIRONMENT == 'pruebas' || params.ENVIRONMENT == 'produccion') {
-                        echo "soy el segundo if. Ambiente seleccionado: ${params.ENVIRONMENT}"
-                    } else {
-                        echo "Soy el else" 
-                        input message: 'Seleccione el ambiente de despliegue', parameters: [choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'])]
-                    }
+                    def ambiente = input message: 'Seleccione el ambiente de despliegue', parameters: [choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'])]
+                    echo "Ambiente seleccionado: ${ambiente}"
                 }
             }
         }
