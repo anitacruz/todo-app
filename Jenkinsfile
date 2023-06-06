@@ -5,6 +5,10 @@ pipeline {
         }
     }
     
+    triggers {
+        githubPush()
+    }
+    
      parameters {
         choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'], description: 'Selecciona el ambiente objetivo')
     }
@@ -21,7 +25,7 @@ pipeline {
 
                     }
                     if (params.ENVIRONMENT == 'desarrollo' || params.ENVIRONMENT == 'pruebas' || params.ENVIRONMENT == 'produccion') {
-                        echo "Ambiente seleccionado: ${params.ENVIRONMENT}"
+                        echo "soy el segundo if. Ambiente seleccionado: ${params.ENVIRONMENT}"
                     } else {
                         echo "Soy el else" 
                         input message: 'Seleccione el ambiente de despliegue', parameters: [choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'])]
