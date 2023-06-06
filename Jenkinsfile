@@ -7,11 +7,11 @@ pipeline {
     
     stages {
         
-       stage('Solicitar Ambiente') {
+       stage('Select environment') {
             steps {
                 script {
-                    env.AMBIENTE = input message: 'Seleccione el ambiente de despliegue', parameters: [choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'])]
-                    echo "Ambiente seleccionado: ${ambiente}"
+                    env.AMBIENTE = input message: 'Select deployment environment', parameters: [choice(name: 'ENVIRONMENT', choices: ['dev', 'stg', 'prod'])]
+                    echo "selected environment : ${ambiente}"
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 // Deploy your application
 
-                input(message:'anetas deployment approval')
+                input(message:'Do you approve the following deploy?')
 
                 // Only continue if approved by specific users
 //                 script {
@@ -30,6 +30,26 @@ pipeline {
 //                     }
 //                 }
             }
+        }
+       
+        stage ('Deploy'){
+            steps{  
+                if(env.AMBIENTE == 'dev'){
+                    echo "Deploy to dev"
+                }
+                else if (env.AMBIENTE == 'stg'){
+                    echo "Deploy to dev"
+                    echo "Deploy to stg"
+                }
+                else if (env.AMBIENTE == 'prod'){
+                    echo "Deploy to dev"
+                    echo "Deploy to stg"
+                    echo "Deploy to prod"
+                }
+                else{
+                    echo "abort"
+                }
+            }      
         }
         
          stage('Fetch') {
