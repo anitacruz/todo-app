@@ -10,7 +10,7 @@ pipeline {
        stage('Solicitar Ambiente') {
             steps {
                 script {
-                    def ambiente = input message: 'Seleccione el ambiente de despliegue', parameters: [choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'])]
+                    env.AMBIENTE = input message: 'Seleccione el ambiente de despliegue', parameters: [choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'])]
                     echo "Ambiente seleccionado: ${ambiente}"
                 }
             }
