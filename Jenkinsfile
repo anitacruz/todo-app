@@ -15,9 +15,15 @@ pipeline {
        stage('Solicitar Ambiente') {
             steps {
                 script {
+                    if(params.CHANGE_ID){
+                        echo "vengo de github"
+                        input message: 'Seleccione el ambiente de despliegue', parameters: [choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'])]
+
+                    }
                     if (params.ENVIRONMENT == 'desarrollo' || params.ENVIRONMENT == 'pruebas' || params.ENVIRONMENT == 'produccion') {
                         echo "Ambiente seleccionado: ${params.ENVIRONMENT}"
                     } else {
+                        echo "Soy el else" 
                         input message: 'Seleccione el ambiente de despliegue', parameters: [choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'])]
                     }
                 }
