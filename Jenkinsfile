@@ -33,21 +33,23 @@ pipeline {
         }
        
         stage ('Deploy'){
-            steps{  
-                if(env.AMBIENTE == 'dev'){
-                    echo "Deploy to dev"
-                }
-                else if (env.AMBIENTE == 'stg'){
-                    echo "Deploy to dev"
-                    echo "Deploy to stg"
-                }
-                else if (env.AMBIENTE == 'prod'){
-                    echo "Deploy to dev"
-                    echo "Deploy to stg"
-                    echo "Deploy to prod"
-                }
-                else{
-                    echo "abort"
+            steps{
+                script {
+                    if(env.AMBIENTE == 'dev'){
+                        echo "Deploy to dev"
+                    }
+                    else if (env.AMBIENTE == 'stg'){
+                        echo "Deploy to dev"
+                        echo "Deploy to stg"
+                    }
+                    else if (env.AMBIENTE == 'prod'){
+                        echo "Deploy to dev"
+                        echo "Deploy to stg"
+                        echo "Deploy to prod"
+                    }
+                    else{
+                        echo "abort"
+                    }
                 }
             }      
         }
