@@ -12,7 +12,17 @@ pipeline {
     
     stages {
         
-       
+       stage('Solicitar Ambiente') {
+            steps {
+                script {
+                    if (params.ENVIRONMENT) {
+                        echo "Ambiente seleccionado: ${params.ENVIRONMENT}"
+                    } else {
+                        input message: 'Seleccione el ambiente de despliegue', parameters: [choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'])]
+                    }
+                }
+            }
+        }
         
        stage('Approval') {
             steps {
