@@ -15,7 +15,7 @@ pipeline {
        stage('Solicitar Ambiente') {
             steps {
                 script {
-                    if (params.ENVIRONMENT) {
+                    if (params.ENVIRONMENT == 'desarrollo' || params.ENVIRONMENT == 'pruebas' || params.ENVIRONMENT == 'produccion') {
                         echo "Ambiente seleccionado: ${params.ENVIRONMENT}"
                     } else {
                         input message: 'Seleccione el ambiente de despliegue', parameters: [choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'])]
