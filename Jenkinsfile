@@ -4,6 +4,10 @@ pipeline {
             label 'docker-agent-node'
         }
     }
+    
+     parameters {
+        choice(name: 'ENVIRONMENT', choices: ['desarrollo', 'pruebas', 'produccion'], description: 'Selecciona el ambiente objetivo')
+    }
 
     
     stages {
